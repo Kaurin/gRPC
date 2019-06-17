@@ -1,0 +1,69 @@
+syntax = "proto3";
+
+package calculator;
+option go_package = "calculatorpb";
+
+message AdditionElements {
+  repeated int64 elements = 1;
+}
+
+message SumRequest {
+  AdditionElements sum_elements = 1;
+}
+message SumResponse {
+  int64 result = 1;
+}
+
+message PNDRequest {
+  int64 request = 1;
+}
+message PNDResponse {
+  int64 response = 1;
+}
+
+message ComputeAverageRequest {
+  int64 request = 1;
+}
+message ComputeAverageResponse {
+  double average = 1;
+}
+
+message FindMaximumRequest {
+  int64 number = 1;
+}
+message FindMaximumResponse {
+  int64 current_max = 1;
+}
+
+message SquareRootRequest {
+  int32 number = 1;
+}
+message SquareRootResponse {
+  double number_root = 1;
+}
+
+service Calculator {
+  // Unary
+  rpc Sum(SumRequest) returns (SumResponse) {
+  };
+
+  // Streaming server
+  rpc PrimeNumberDecomposition(PNDRequest) returns (stream PNDResponse) {
+  };
+
+  // Streaming client
+  rpc ComputeAverage(stream ComputeAverageRequest)
+      returns (ComputeAverageResponse) {
+  };
+
+  // BiDi
+  rpc FindMaximum(stream FindMaximumRequest)
+      returns (stream FindMaximumResponse) {
+  };
+
+  // Unary, testing gRPC errors
+  // send an error if the number sent is negative
+  // Error being sent is of type INVALID_ARGUMENT
+  rpc SquareRoot(SquareRootRequest) returns (SquareRootResponse) {
+  };
+}
