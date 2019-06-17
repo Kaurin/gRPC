@@ -26,4 +26,7 @@ go run calculator/calculator_client/client.go
 `greet` has gRPC error handling and deadlines, whereas `calculator` does not.
 
 ### SSL:
-I used my certs for dood.ie, but instructions provided in `ssl/instructions.sh` are an amazing cheatsheet!
+```bash
+cd ssl/
+bash instructions.sh
+```
