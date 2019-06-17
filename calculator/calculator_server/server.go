@@ -11,6 +11,7 @@ import (
 	"google.golang.org/grpc/codes"
 
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/reflection"
 	"google.golang.org/grpc/status"
 
 	"github.com/Kaurin/gRPC/calculator/calculatorpb"
@@ -25,7 +26,10 @@ func main() {
 		log.Printf("Error setting up listener %v", err)
 	}
 	s := grpc.NewServer()
-	calculatorpb.RegisterCalculatorServer(s, &server{})
+	calculatorpb.RegisterCalculatorServiceServer(s, &server{})
+
+	// Register the reflection service on our gRPC server
+	reflection.Register(s)
 
 	if err := s.Serve(lis); err != nil {
 		log.Fatalf("Failed to serve: %v", err)
@@ -51,7 +55,7 @@ func (*server) Sum(ctx context.Context, in *calculatorpb.SumRequest) (*calculato
 	return result, nil
 }
 
-func (*server) PrimeNumberDecomposition(in *calculatorpb.PNDRequest, stream calculatorpb.Calculator_PrimeNumberDecompositionServer) error {
+func (*server) PrimeNumberDecomposition(in *calculatorpb.PNDRequest, stream calculatorpb.CalculatorService_PrimeNumberDecompositionServer) error {
 	log.Printf("Started Prime Number Decomposition server streaming function")
 	divisor := int64(2)
 	n := in.GetRequest()
@@ -69,7 +73,7 @@ func (*server) PrimeNumberDecomposition(in *calculatorpb.PNDRequest, stream calc
 	return nil
 }
 
-func (*server) ComputeAverage(stream calculatorpb.Calculator_ComputeAverageServer) error {
+func (*server) ComputeAverage(stream calculatorpb.CalculatorService_ComputeAverageServer) error {
 	log.Printf("Started ComputeAverage client streaming function")
 
 	sum := int64(0)
@@ -91,7 +95,7 @@ func (*server) ComputeAverage(stream calculatorpb.Calculator_ComputeAverageServe
 	}
 }
 
-func (*server) FindMaximum(stream calculatorpb.Calculator_FindMaximumServer) error {
+func (*server) FindMaximum(stream calculatorpb.CalculatorService_FindMaximumServer) error {
 	log.Printf("Started FindMaximum BiDi streaming function")
 
 	currentMax := *new(int64)

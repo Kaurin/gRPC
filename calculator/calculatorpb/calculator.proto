@@ -42,7 +42,7 @@ message SquareRootResponse {
   double number_root = 1;
 }
 
-service Calculator {
+service CalculatorService {
   // Unary
   rpc Sum(SumRequest) returns (SumResponse) {
   };

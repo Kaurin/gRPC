@@ -21,7 +21,7 @@ func main() {
 	if err != nil {
 		log.Println("Can't establish gRPC connection.")
 	}
-	c := calculatorpb.NewCalculatorClient(cc)
+	c := calculatorpb.NewCalculatorServiceClient(cc)
 	// doUnary(c)
 	// doPrimeNumberDecomposition(c)
 	// doComputeAverage(c)
@@ -29,7 +29,7 @@ func main() {
 	doErrorUnary(c)
 }
 
-func doUnary(c calculatorpb.CalculatorClient) {
+func doUnary(c calculatorpb.CalculatorServiceClient) {
 	log.Printf("Starting the Unary Client operation")
 	// setup the request
 	elems := &calculatorpb.AdditionElements{
@@ -46,7 +46,7 @@ func doUnary(c calculatorpb.CalculatorClient) {
 	log.Printf("Result: %v", res.GetResult())
 }
 
-func doPrimeNumberDecomposition(c calculatorpb.CalculatorClient) {
+func doPrimeNumberDecomposition(c calculatorpb.CalculatorServiceClient) {
 	log.Printf("Starting the Prime Number Decomposition operation")
 	req := &calculatorpb.PNDRequest{
 		Request: int64(9223372036854775806),
@@ -70,7 +70,7 @@ func doPrimeNumberDecomposition(c calculatorpb.CalculatorClient) {
 	}
 }
 
-func doComputeAverage(c calculatorpb.CalculatorClient) {
+func doComputeAverage(c calculatorpb.CalculatorServiceClient) {
 	log.Printf("Starting the Compute Average operation")
 	stream, err := c.ComputeAverage(context.Background())
 	if err != nil {
@@ -90,7 +90,7 @@ func doComputeAverage(c calculatorpb.CalculatorClient) {
 	log.Printf("Recieved average: %v", resp.GetAverage())
 }
 
-func doFindMaximum(c calculatorpb.CalculatorClient) {
+func doFindMaximum(c calculatorpb.CalculatorServiceClient) {
 	log.Printf("Starting the FindMaximum operation")
 	waitc := make(chan struct{})
 	stream, err := c.FindMaximum(context.Background())
@@ -128,7 +128,7 @@ func doFindMaximum(c calculatorpb.CalculatorClient) {
 	<-waitc
 }
 
-func doErrorUnary(c calculatorpb.CalculatorClient) {
+func doErrorUnary(c calculatorpb.CalculatorServiceClient) {
 	log.Printf("Starting the doErrorUnary operation")
 
 	// legitimate req
@@ -137,7 +137,7 @@ func doErrorUnary(c calculatorpb.CalculatorClient) {
 
 }
 
-func doSquareRootCall(c calculatorpb.CalculatorClient, number int32) {
+func doSquareRootCall(c calculatorpb.CalculatorServiceClient, number int32) {
 	log.Printf("Trying for square root of %v", number)
 	res, err := c.SquareRoot(context.Background(), &calculatorpb.SquareRootRequest{
 		Number: number,
