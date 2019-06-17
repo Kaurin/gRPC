@@ -12,9 +12,18 @@ Done while following this guide Udemy course: https://www.udemy.com/grpc-golang/
 1. Run `go mod tidy`
 1. Check the `*.proto` files. Modify if so desired.
 1. Run `./generate.sh`
-1. Run the respective server, then client. For example: 
+
+### Usage
+Run the respective server, then client. For example: 
 ```bash
 go run calculator/calculator_server/server.go
 # <separate terminal>
 go run calculator/calculator_client/client.go
 ```
+
+## greet VS calculator
+`greet` was the code that mostly the instructor has written, while `calculator` was something that I wrote based on assignments.
+`greet` has gRPC error handling and deadlines, whereas `calculator` does not.
+
+### SSL:
+I used my certs for dood.ie, but instructions provided in `ssl/instructions.sh` are an amazing cheatsheet!
