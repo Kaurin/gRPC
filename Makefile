@@ -18,6 +18,11 @@ clean:
 	find . -name '*.pb.go' -type f -exec rm {} \;
 	rm -rf vendor
 
+cleanimages:
+	docker rmi golangrpc
+	docker rmi docker.io/amazon/dynamodb-local
+	docker image prune -f
+
 prep:
 	go get -u github.com/golang/protobuf/protoc-gen-go
 	go get -u google.golang.org/grpc
@@ -42,4 +47,4 @@ lint:
 
 all: clean prep lint
 
-.PHONY: prep clean lint protobuf all
+.PHONY: prep clean lint protobuf all test cleanimages
