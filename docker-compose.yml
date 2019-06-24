@@ -1,6 +1,4 @@
-# Meant to be used with Evans gRPC tool: https://github.com/ktr0731/evans
-# Clients that I wrote here won't work for server_greet and server_calculator because of ports not being default
-
+---
 version: '3'
 services:
   blog:
@@ -24,7 +22,7 @@ services:
       - "50053:50053" # Notice the port
     command: go run github.com/Kaurin/gRPC/calculator/calculator_server
 
-  dynamodb: # Used by server_blog
+  dynamodb: # Used by blog
     image: amazon/dynamodb-local
     expose:
       - "8000"
