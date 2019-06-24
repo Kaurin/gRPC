@@ -1,7 +1,6 @@
 # gRPC practice
 
 Done while following this guide Udemy course: https://www.udemy.com/grpc-golang/
-I have deviated in a sense that I've used DynamoDB instead of MongoDB. 
 
 ### What's in this project
 
@@ -35,7 +34,7 @@ Requires:
 
 ### Usage
 
-#####Spin up the servers
+##### Spin up the servers
 
 ```bash
 docker-compose up
