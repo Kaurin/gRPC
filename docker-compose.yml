@@ -1,0 +1,30 @@
+# Meant to be used with Evans gRPC tool: https://github.com/ktr0731/evans
+# Clients that I wrote here won't work for server_greet and server_calculator because of ports not being default
+
+version: '3'
+services:
+  blog:
+    build: .  # Only build once. Reuse in other services
+    image: golangrpc
+    ports:
+      - "50051:50051"
+    command: go run github.com/Kaurin/gRPC/blog/blog_server
+    environment:
+      LOCALDDB: HEllsYeah # Value doesn't matter as long as the var is set
+
+  greet:
+    image: golangrpc # Reused from server_blog
+    ports:
+      - "50052:50052" # Notice the port
+    command: go run github.com/Kaurin/gRPC/greet/greet_server
+
+  calculator:
+    image: golangrpc # Reused from server_blog
+    ports:
+      - "50053:50053" # Notice the port
+    command: go run github.com/Kaurin/gRPC/calculator/calculator_server
+
+  dynamodb: # Used by server_blog
+    image: amazon/dynamodb-local
+    expose:
+      - "8000"

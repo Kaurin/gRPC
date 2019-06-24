@@ -15,17 +15,18 @@ import (
 )
 
 func main() {
+	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	// setup the client
-	cc, err := grpc.Dial("localhost:50051", grpc.WithInsecure())
+	cc, err := grpc.Dial("localhost:50053", grpc.WithInsecure())
 	defer cc.Close()
 	if err != nil {
 		log.Println("Can't establish gRPC connection.")
 	}
 	c := calculatorpb.NewCalculatorServiceClient(cc)
-	// doUnary(c)
-	// doPrimeNumberDecomposition(c)
-	// doComputeAverage(c)
-	// doFindMaximum(c)
+	doUnary(c)
+	doPrimeNumberDecomposition(c)
+	doComputeAverage(c)
+	doFindMaximum(c)
 	doErrorUnary(c)
 }
 

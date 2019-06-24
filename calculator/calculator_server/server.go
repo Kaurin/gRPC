@@ -20,8 +20,9 @@ import (
 type server struct{}
 
 func main() {
+	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	log.Println("Hello World!")
-	lis, err := net.Listen("tcp", ":50051")
+	lis, err := net.Listen("tcp", ":50053")
 	if err != nil {
 		log.Printf("Error setting up listener %v", err)
 	}
@@ -88,7 +89,7 @@ func (*server) ComputeAverage(stream calculatorpb.CalculatorService_ComputeAvera
 			})
 		}
 		if err != nil {
-			log.Printf("Failed to recieve message from stream: %v", err)
+			return fmt.Errorf("Failed to recieve message from stream: %v", err)
 		}
 		sum += req.GetRequest()
 		iterations++

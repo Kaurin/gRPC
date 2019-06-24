@@ -17,6 +17,7 @@ import (
 )
 
 func main() {
+	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	log.Println("Hello World")
 
 	tls := true
@@ -29,17 +30,17 @@ func main() {
 		opts = []grpc.DialOption{grpc.WithTransportCredentials(creds)}
 	}
 
-	cc, err := grpc.Dial("localhost:50051", opts...)
+	cc, err := grpc.Dial("localhost:50052", opts...)
 	defer cc.Close()
 	if err != nil {
 		log.Fatalf("Could not connect: %v", err)
 	}
 	c := greetpb.NewGreetServiceClient(cc)
 	doUnary(c)
-	// doServerStreaming(c)
-	// doClientStreaming(c)
-	// doBiDiStreaming(c)
-	// doUnaryWithDeadline(c, 5*time.Second) // Shoud complete
+	doServerStreaming(c)
+	doClientStreaming(c)
+	doBiDiStreaming(c)
+	doUnaryWithDeadline(c, 5*time.Second) // Shoud complete
 	// doUnaryWithDeadline(c, 1*time.Second) // Should not complete
 }
 
