@@ -12,15 +12,18 @@ PKGS := \
 
 
 clean:
-	go clean -cache -testcache -modcache  -i -x -modcache $(PKGS)
 	rm -rf ssl/server.*
 	rm -rf ssl/ca.*
 	find . -name '*.pb.go' -type f -exec rm {} \;
 	rm -rf vendor
 
+goclean:
+	go clean -cache -testcache -i -x -modcache $(PKGS)
+
 cleanimages:
 	docker rmi golangrpc
 	docker rmi docker.io/amazon/dynamodb-local
+	docker rmi golang:alpine
 	docker image prune -f
 
 prep:
@@ -47,4 +50,4 @@ lint:
 
 all: clean prep lint
 
-.PHONY: prep clean lint protobuf all test cleanimages
+.PHONY: prep clean lint protobuf all test cleanimages goclean
