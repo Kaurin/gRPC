@@ -42,10 +42,11 @@ docker-compose up
 
 ##### In a separate tab, run clients
 Skip this if you just want to explore with Evans
+
 ```bash
 ## GREET
 
-# Needed for greet_client because that has an SSL example, and the cert is self-signed
+# Grabbing the SSL cert. Needed for greet_client because that has an SSL example
 docker cp grpc_greet_1:/code/ssl/server.crt ssl/server.crt
 go run github.com/Kaurin/gRPC/greet/greet_client
 
@@ -58,17 +59,14 @@ go run github.com/Kaurin/gRPC/blog/blog_client
 
 ##### Exploring the gRPC API manually with Evans
 
+Unfortunately, Evans doesn't support a simple "go get -u" :(
+
 ```bash
-## Unfortunately, Evans doesn't support a simple "go get -u" :(
-MYDIR=$(pwd)
-cd /tmp
-git clone https://github.com/ktr0731/evans.git
-cd evans
-go install # Requires golang 1.12+, and a properly set-up GOHOME and GOROOT
-cd "$MYDIR" # Or just go back to the project folder
+# Install the "evans" utility. Check the readme for details
+make evans
 
 ## GREET
-# Same as above, needed because it's a self-signed cert
+# Grabbing the SSL cert. Needed for greet_client because that has an SSL example
 docker cp grpc_greet_1:/code/ssl/server.crt ssl/server.crt
 evans -p 50052 --tls --host localhost --cacert ssl/server.crt --reflection
 
@@ -98,4 +96,3 @@ docker-compose down
 ```bash
 make cleanimages
 ```
-

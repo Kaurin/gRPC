@@ -10,6 +10,10 @@ PKGS := \
 	github.com/Kaurin/gRPC/greet/greet_server
 
 
+evans:
+	cd /tmp ; git clone https://github.com/ktr0731/evans.git
+	cd /tmp/evans ;	go install # Requires golang 1.12+, and a properly set-up GOHOME and GOROOT
+	rm -rf /tmp/evans
 
 clean:
 	rm -rf ssl/server.*
@@ -49,6 +53,7 @@ lint:
 	go fmt $(PKGS)
 	go vet $(PKGS)
 
-all: clean prep lint
+all: goclean clean prep lint
 
-.PHONY: prep clean lint protobuf all test cleanimages goclean
+.PHONY: prep clean lint protobuf all test cleanimages goclean evans
+
