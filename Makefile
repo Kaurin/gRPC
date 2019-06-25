@@ -21,10 +21,11 @@ goclean:
 	go clean -cache -testcache -i -x -modcache $(PKGS)
 
 cleanimages:
-	docker rmi golangrpc
-	docker rmi docker.io/amazon/dynamodb-local
-	docker rmi golang:alpine
-	docker image prune -f
+	docker-compose down
+	docker rmi golangrpc || true
+	docker rmi docker.io/amazon/dynamodb-local || true
+	docker rmi golang:alpine || true
+	docker image prune -f || true
 
 prep:
 	go get -u github.com/golang/protobuf/protoc-gen-go

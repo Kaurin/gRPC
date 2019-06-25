@@ -93,10 +93,9 @@ docker-compose down
 
 ##### Manual cleanup of remaining files
 
-**WARNING** only run these commands if you know what they do
+**WARNING** Please make sure to read the makefile before running the command
 
 ```bash
-docker rmi golangrpc
-docker rmi docker.io/amazon/dynamodb-local
-docker image prune # Totally optional. The two above should be enough.
+make cleanimages
 ```
+
