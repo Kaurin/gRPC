@@ -62,7 +62,7 @@ go run github.com/Kaurin/gRPC/blog/blog_client
 Unfortunately, Evans doesn't support a simple "go get -u" :(
 
 ```bash
-# Install the "evans" utility. Check the readme for details
+# Install the "evans" utility. Check the Makefile for details
 make evans
 
 ## GREET
